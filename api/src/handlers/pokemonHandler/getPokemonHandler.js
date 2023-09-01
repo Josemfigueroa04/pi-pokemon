@@ -1,4 +1,6 @@
-const { getPokemonApiControllers, getPokemonDbControllers, getPokemonByNameControllers } = require('../../controllers/pokemonsControllers/pokemonControllers');
+const {getPokemonByNameControllers} = require('../../controllers/pokemonsControllers/getPokemonByNameControllers')
+const {getPokemonApiControllers} = require('../../controllers/pokemonsControllers/getPokemonApiControllers')
+const {getPokemonDbControllers} = require('../../controllers/pokemonsControllers/getPokemonDbControllers')
 
 const getPokemonHandler = async (req, res) => {
     const {name} = req.query;
