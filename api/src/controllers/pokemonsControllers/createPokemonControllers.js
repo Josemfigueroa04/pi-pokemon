@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { Pokemon, Type } = require('../db');
+const { Pokemon, Type } = require('../../db');
 
 const createPokemonControllers = async (name, imagen, hp, attack, defense, speed, height, weight,type) => {
 
@@ -7,10 +7,11 @@ const createPokemonControllers = async (name, imagen, hp, attack, defense, speed
     const createdPokemon= await Pokemon.create({name, imagen, hp, attack, defense, speed, height, weight});
 
     //busco el tipo en la base de datos
-    const findType = await Type.findOne({where:{name:type}});
+    const findType = await Type.findAll({where:{name:type}});
 
     //asocio el pokemon con el tipo
-    await createdPokemon.addType(findType);
+    await createdPokemon.setTypes(findType);
+
 
     return createdPokemon;
 }
