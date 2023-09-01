@@ -1,28 +1,52 @@
-const getPokemonHandler = (req, res) => {
+const { createPokemonControllers } = require("../controllers/createPokemonControllers");
+const { getPokemonByIdControllers } = require("../controllers/getPokemonByIdControllers");
+
+const getPokemonHandler = async (req, res) => {
     const {name} = req.query;
-    if (name) {
-        res.send(`Buscar todos los usuarios que se llaman ${name}`);
-    }else{
-        res.send('Quiero enviar todos los usuarios');
+    try{
+       if (name) {
+        const pokemonByName = await getPokemonByNameControllers(name);
+        res.status(200).json(pokemonByName)
+        }else{
+            const allPokemons = await getPokemonAllControllers();
+            res.status(200).json(allPokemons);
+        } 
+    } catch (error){
+        res.status(400).json({error:error.message});
+    }
+    
+};
+
+const getPokemonByIdHandler = async(req, res) => {
+    const {id} = req.params;
+    const source = isNaN(id) ? 'db' : 'api';
+
+    try{
+        const response = await getPokemonByIdControllers(id, source);
+        res.status(200).json(response);
+
+    }catch (error){
+        res.status(400).json({error:error.message});
     }
 };
 
-const getPokemonByIdHandler = (req, res) => {
-    const {id} = req.params;
-    res.send(`Va a enviar el detalle de el usuario de ID ${id}`);
-};
-
-const createPokemonHandler = (req, res) => {
-    const {name, imagen, hp, attack, defense, speed, height, weight} = req.body;
-    res.send(`Se va a crear un usuario con estos datos:
-     nombre: ${name},
-     vida: ${hp}, 
-     ataque: ${attack},
-     defensa: ${defense},
-     velocidad: ${speed},
-     altura: ${height},
-     peso: ${weight}
-     imagen: ${imagen}`);
+const createPokemonHandler = async (req, res) => {
+    const {name, imagen, hp, attack, defense, speed, height, weight,type} = req.body;
+    try {
+        const response = await createPokemonControllers(name, imagen, hp, attack, defense, speed, height, weight,type);
+        res.status(200).json(response);
+    }catch (error){
+        res.status(400).json({error:error.message});
+    }
+    // res.send(`Se va a crear un usuario con estos datos:
+    //  name: ${name},
+    //  hp: ${hp}, 
+    //  attack: ${attack},
+    //  defense: ${defense},
+    //  speed: ${speed},
+    //  height: ${height},
+    //  weight: ${weight}
+    //  imagen: ${imagen}`);
 };
 
 module.exports = {
