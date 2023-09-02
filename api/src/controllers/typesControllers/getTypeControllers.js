@@ -4,23 +4,18 @@ const { Type } = require('../../db');
 const getTypeControllers = async () => {
     // busco todos los tipos en la base de datos
     const findAlltypeDb = await Type.findAll();
-    if(findAlltypeDb.length > 0) return findAlltypeDb;
+    if(findAlltypeDb.length) return findAlltypeDb;
 
     // busco todos los tipos en la API
-    const {data} = await axios.get('https://pokeapi.co/api/v2/type');
-
-    //guardo los type de la api en la base de datos
-    const typesApiDb = data.results.map(async(type) => {
-        await Type.create({
+    const response = await axios.get('https://pokeapi.co/api/v2/type');
+    const {results} =  response.data;
+    
+    const type = results.map(type => ({ 
             name: type.name
-        })
-    })
-    // se espera que se resuelvan todas las promesas para continuar
-    await Promise.all(typesApiDb);
-
-    // busco todos los tipos en la base de datos
-    const findAlltypeDb2 = await Type.findAll();
-    return findAlltypeDb2;
+    }));
+    
+    // creo los tipos en la base de datos
+    return  await Type.bulkCreate(type);
 }
 
 

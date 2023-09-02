@@ -1,12 +1,13 @@
 const {Pokemon, Type} = require('../../db');
 const axios = require('axios');
+const { Op } = require('sequelize');
+
 
 
 const getPokemonByNameControllers = async (name) => {
     //busco el pokemon en la base de datos por nombre
-    const findPokemon = await Pokemon.findOne({where:{name:name}, 
-        include:{
-        model:Type,
+    const findPokemon = await Pokemon.findOne({where:{name}, include:
+        {model:Type,
         attributes:['name'],
         through:{
             attributes:[]
@@ -41,7 +42,11 @@ const getPokemonByNameControllers = async (name) => {
                 return { name: type.type.name }
             })
         }
-        return pokemonName;
+        if((!pokemonName || pokemonName.length ===0) && !findPokemon.length){
+             throw new Error('Pokemon not found')};
+        
+        return [...pokemonName, ...findPokemon].slice(0, 15);
+        
     }
 
     module.exports = {

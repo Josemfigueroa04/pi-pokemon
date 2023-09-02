@@ -1,4 +1,4 @@
-const {getTypeControllers} = require('../../controllers/typesControllers/getTypeControllers');
+const {getTypeControllers} = require('../controllers/typesControllers/getTypeControllers');
 
 const getTypeHandler = async (req, res) => {
     try{

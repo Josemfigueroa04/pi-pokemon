@@ -3,8 +3,8 @@ const { getPokemonApiControllers } = require('../../controllers/pokemonsControll
 const getPokemonApiHandler = async (req, res) => {
 
     try{
-        const pokemonApi = await getPokemonApiControllers();
-        res.status(200).json(pokemonApi);
+        const pokemonsApi = await getPokemonApiControllers();
+        res.status(200).json(pokemonsApi);
     } catch (error){
         res.status(400).json({error:error.message});
     }
