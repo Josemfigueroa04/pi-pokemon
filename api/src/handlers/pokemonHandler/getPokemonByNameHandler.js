@@ -1,7 +1,7 @@
 const {getPokemonByNameControllers} = require('../../controllers/pokemonsControllers/getPokemonByNameControllers');
 
 const getPokemonByNameHandler = async (req, res) => {
-    const {name} = req.query;
+    const {name} = req.params ;
     try{
         const minName = name.toLowerCase();
         const pokemonByName = await getPokemonByNameControllers(minName);

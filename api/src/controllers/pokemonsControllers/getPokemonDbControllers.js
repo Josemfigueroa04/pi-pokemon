@@ -10,6 +10,8 @@ const getPokemonDbControllers = async () => {
             attributes:[]
         }
     }});
+   
+    
     // devuelvo los pokemones encontrados con las propiedades que me interesan
     return pokemonDb.map(pokemon => {
         return {

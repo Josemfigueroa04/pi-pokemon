@@ -7,6 +7,11 @@ const {getPokemonApiHandler} = require('../handlers/pokemonHandler/getPokemonApi
 const {getPokemonDbHandler} = require('../handlers/pokemonHandler/getPokemonDbHandler');
 const { getPokemonByNameHandler } = require('../handlers/pokemonHandler/getPokemonByNameHandler');
 
+pokemonsRouter.get('/api', getPokemonApiHandler);
+
+pokemonsRouter.get('/db', getPokemonDbHandler);
+
+pokemonsRouter.get('/name', getPokemonByNameHandler);
 
 pokemonsRouter.get('/', getPokemonHandler);
 
@@ -14,10 +19,6 @@ pokemonsRouter.get('/:id', getPokemonByIdHandler);
 
 pokemonsRouter.post('/', createPokemonHandler);
 
-pokemonsRouter.get('/api', getPokemonApiHandler);
 
-pokemonsRouter.get('/db', getPokemonDbHandler);
-
-pokemonsRouter.get('/name', getPokemonByNameHandler);
 
 module.exports = pokemonsRouter;
