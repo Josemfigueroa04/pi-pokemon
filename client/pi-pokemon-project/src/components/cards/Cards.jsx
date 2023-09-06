@@ -7,7 +7,6 @@ const Cards = ({allPokemons}) => {
 
     return (
         <div className="cards">
-            <h2>Cards</h2>
             <div className="cards__container">
                 {pokemonList?.map((pokemon) => (
                     <Card
