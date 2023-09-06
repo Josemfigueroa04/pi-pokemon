@@ -7,7 +7,9 @@ let allPokemon = []; // Array para almacenar todos los pokemones
 
   let url = 'https://pokeapi.co/api/v2/pokemon'; // URL inicial
 
-  while (url) {
+  let i=0;
+
+  while (i<10) {
     const { data } = await axios.get(url);
     const pokemonApi = data.results.map(async (pokemon) => {
       const { data } = await axios.get(pokemon.url);
@@ -29,6 +31,7 @@ let allPokemon = []; // Array para almacenar todos los pokemones
     allPokemon = allPokemon.concat(await Promise.all(pokemonApi));
 
     url = data.next; // Actualizar la URL con la siguiente página o null si no hay más páginas
+    i++;
   }
 
   return allPokemon;
