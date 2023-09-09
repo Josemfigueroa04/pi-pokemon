@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_POKEMONS,GET_POKEMON_ID,GET_POKEMON_NAME, GET_TYPES, POST_POKEMON, FILTER_TYPE,FILTER_API,FILTER_DB,ORDER_ATTACK,ORDER_NAME} from '../actionstype/index.js';
+import { GET_POKEMONS,GET_POKEMON_ID,GET_POKEMON_NAME, GET_TYPES, POST_POKEMON, FILTER_TYPE,FILTER_POKE,ORDER_ATTACK,ORDER_NAME} from '../actionstype/index.js';
 
 export const getPokemons = () =>{
     return async (dispatch) => {
@@ -26,7 +26,7 @@ export const getPokemonId= (id) =>{
 export const getPokemonName = (name) =>{
     return async (dispatch) => {
         try{
-            const pokemonName = await axios.get(`http://localhost:3001/pokemons?name=${name}`);
+            const pokemonName = await axios.get(`http://localhost:3001/pokemons/?name=${name}`);
             dispatch({type: GET_POKEMON_NAME, payload: pokemonName.data})
         }catch(error){
             console.log(error)
@@ -56,33 +56,33 @@ export const postPokemon = (payload) =>{
     }
 };
 
-export const filterPokemonsApi = (payload) =>{
-    return (dispatch) => {
-        dispatch({type: FILTER_API, payload})
+export const filterPokemons= (createInDb) =>{
+    return {
+        type: FILTER_POKE, 
+        payload:createInDb
     }
 };
 
-export const filterPokemonDb = (payload) =>{
-    return (dispatch) => {
-        dispatch({type: FILTER_DB, payload})
+
+
+export const filterType = (types) =>{
+    return{
+        type: FILTER_TYPE, 
+        payload:types
     }
 };
 
-export const filterByType = (payload) =>{
-    return (dispatch) => {
-        dispatch({type: FILTER_TYPE, payload})
+export const orderByName = (order) =>{
+    return{
+        type: ORDER_NAME, 
+        payload:order
     }
 };
 
-export const orderByName = (payload) =>{
-    return (dispatch) => {
-        dispatch({type: ORDER_NAME, payload})
-    }
-};
-
-export const orderByAttack = (payload) =>{
-    return (dispatch) => {
-        dispatch({type: ORDER_ATTACK, payload})
+export const orderByAttack = (order) =>{
+    return{
+        type: ORDER_ATTACK, 
+        payload:order
     }
 };
 

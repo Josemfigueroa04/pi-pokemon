@@ -1,5 +1,5 @@
 import { GET_POKEMONS,GET_POKEMON_ID,GET_POKEMON_NAME,
-         GET_TYPES,POST_POKEMON,FILTER_API,FILTER_DB,
+         GET_TYPES,POST_POKEMON,FILTER_POKE,
          FILTER_TYPE,ORDER_ATTACK,ORDER_NAME } from "../actionstype/index.js";
 
 
@@ -7,11 +7,9 @@ const initialState = {
     allPokemons: [],
     copyAllPokemons: [],
     allTypes: [],
-    pokemonId: [],
-    pokemonName: [],
-    pokemonCreated: [],
-    pokemonFiltered: [],
-    pokemonOrder: [],
+    copyALlTypes: [],
+    pokemonDetail: [],
+
     };
 
 const reducer = (state = initialState, {type, payload}) => {
@@ -26,50 +24,67 @@ const reducer = (state = initialState, {type, payload}) => {
         case GET_TYPES:
             return {
                 ...state,
-                allTypes: payload
+                allTypes: payload,
+                copyALlTypes: payload
             }
         case GET_POKEMON_ID:
             return {
                 ...state,
-                pokemonId: payload
+                pokemonDetail: payload
             }
         case GET_POKEMON_NAME:
             return {
                 ...state,
-                pokemonName: payload
+                allPokemons: payload
             }
         case POST_POKEMON:
             return {
                 ...state,
-                pokemonCreated: payload
+                allPokemons: payload
             }
-        case FILTER_API:
+        case FILTER_POKE:
             return {
                 ...state,
-                pokemonFiltered: payload
-            }
-        case FILTER_DB:
-            return {
-                ...state,
-                pokemonFiltered: payload
-            }
-        case FILTER_TYPE:
-            return {
-                ...state,
-                pokemonFiltered: payload
-            }
-        case ORDER_NAME:
-            return {
-                ...state,
-                pokemonOrder: payload
-            }
-        case ORDER_ATTACK:
-            return {
-                ...state,
-                pokemonOrder: payload
+                allPokemons: payload  === 'All'? [...state.copyAllPokemons ] 
+                :payload==='creado'? state.copyAllPokemons.filter(e => e.createInDb === payload)
+                :payload==='api'? state.copyAllPokemons.filter(e => !e.createInDb === payload)
+                :[...state.copyAllPokemons]
             }
 
-           
+        case FILTER_TYPE:
+
+            return {
+                ...state,
+                allPokemons: 
+                payload === 'allTypes' ? [...state.copyAllPokemons ]
+                :state.copyAllPokemons.filter(e => e.types.includes(payload))
+
+            }
+        case ORDER_NAME:
+            let orderName = [...state.allPokemons];
+
+            return {
+                ...state,
+                allPokemons: 
+                payload === 'default'? [...state.copyAllPokemons]
+                :payload==='Asc'?orderName.sort((a, b) => { return a.name.localeCompare(b.name) }) 
+                :payload==='Dec'?orderName.sort((a, b) => { return b.name.localeCompare(a.name) })
+                :[...state.copyAllPokemons]
+            }
+
+        case ORDER_ATTACK:
+            let orderAttack = [...state.allPokemons];
+
+            return {
+                ...state,
+                allPokemons: 
+                payload === 'default'? [...state.copyAllPokemons]
+                :payload==='Asc'?orderAttack.sort((a, b) => { return a.attack-b.attack }) 
+                :payload==='Dec'?orderAttack.sort((a, b) => { return b.attack-a.attack })
+                :[...state.copyAllPokemons]
+            }
+            
+
         
         default:
             return { ...state }

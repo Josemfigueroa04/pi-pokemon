@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import "./Nav.style.css";
 
-const Nav = () => {
+const Nav = ({handleInputChange, handleSubmit}) => {
     return (
         <div className="nav">
         <div className="nav__logo">
@@ -13,11 +13,11 @@ const Nav = () => {
             {/* <Link to="/create"> <button>Create Pokemons</button> </Link> */}
         </div>
 
-        <div>
+        <form >
             <label htmlFor=""></label>
-            <input type="search" placeholder="Pokemon Name" />
-            <button>Search</button>
-        </div>
+            <input onChange={handleInputChange} type="search" placeholder="Pokemon Name"  />
+            <button type="submit" onClick={handleSubmit}>Search</button>
+        </form>
         </div>
     );
     }

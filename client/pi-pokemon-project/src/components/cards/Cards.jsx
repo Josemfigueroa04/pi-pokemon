@@ -8,7 +8,7 @@ const Cards = ({allPokemons}) => {
     return (
         <div className="cards">
             <div className="cards__container">
-                {pokemonList?.map((pokemon) => (
+                {  pokemonList?.map((pokemon) => (
                     <Card
                     key={pokemon.id}
                     pokemon={pokemon}
@@ -20,3 +20,4 @@ const Cards = ({allPokemons}) => {
     }
 
 export default Cards;
+
