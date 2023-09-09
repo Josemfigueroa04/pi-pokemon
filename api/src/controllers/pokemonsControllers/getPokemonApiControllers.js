@@ -9,7 +9,7 @@ let allPokemon = []; // Array para almacenar todos los pokemones
 
   let i=0;
 
-  while (i<10) {
+  while (i<3) {
     const { data } = await axios.get(url);
     const pokemonApi = data.results.map(async (pokemon) => {
       const { data } = await axios.get(pokemon.url);
@@ -23,6 +23,7 @@ let allPokemon = []; // Array para almacenar todos los pokemones
         speed: data.stats[5].base_stat,
         height: data.height,
         weight: data.weight,
+        createdInDb: false,
         types: data.types.map((type) => ({
           name: type.type.name,
         })),

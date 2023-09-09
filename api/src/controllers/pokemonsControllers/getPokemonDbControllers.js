@@ -24,6 +24,7 @@ const getPokemonDbControllers = async () => {
             speed: pokemon.speed,
             height: pokemon.height,
             weight: pokemon.weight,
+            createdInDb: true,
             types: pokemon.types.map(type => {
                 return { name: type.name }
             })

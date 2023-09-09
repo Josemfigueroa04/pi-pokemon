@@ -8,19 +8,17 @@ const getPokemonHandler = async (req, res) => {
     const {name} = req.query;
        if (name) {
         try{
-            const minName = name.toLowerCase();
+        const minName = name.toLowerCase();
         const pokemonByName = await getPokemonByNameControllers(minName);
         res.status(200).json(pokemonByName)
         }catch(error){
             res.status(400).json({error:error.message});
-        }
-        
+        };
         }else{
             try{
-
             const apiPokemons = await getPokemonApiControllers();
             const dbPokemons = await getPokemonDbControllers();
-            const allPokemons = [...apiPokemons, ...dbPokemons]
+            const allPokemons = [...dbPokemons,...apiPokemons ]
             
             res.status(200).json(allPokemons);
             } catch (error){
@@ -43,9 +41,9 @@ const getPokemonByIdHandler = async(req, res) => {
 };
 
 const createPokemonHandler = async (req, res) => {
-    const {name, imagen, hp, attack, defense, speed, height, weight,type} = req.body;
+    const {name, imagen, hp, attack, defense, speed, height, weight,type,createInDb} = req.body;
     try {
-        const response = await createPokemonControllers(name, imagen, hp, attack, defense, speed, height, weight,type);
+        const response = await createPokemonControllers(name, imagen, hp, attack, defense, speed, height, weight,type,createInDb);
         res.status(200).json(response);
     }catch (error){
         res.status(400).json({error:error.message});
