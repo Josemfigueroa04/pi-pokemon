@@ -46,8 +46,8 @@ const Filter =() => {
             </select>
 
             <select onChange={handleFilter}>
-                <option value="default">Filter</option>
-                <option value="created">Created</option>
+                <option value="All">Filter</option>
+                <option value="creado">Created</option>
                 <option value="api">Api</option>
             </select>
 

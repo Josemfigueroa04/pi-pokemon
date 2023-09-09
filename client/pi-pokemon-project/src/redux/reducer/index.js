@@ -45,9 +45,9 @@ const reducer = (state = initialState, {type, payload}) => {
         case FILTER_POKE:
             return {
                 ...state,
-                allPokemons: payload  === 'All'? [...state.copyAllPokemons ] 
-                :payload==='creado'? state.copyAllPokemons.filter(e => e.createInDb === payload)
-                :payload==='api'? state.copyAllPokemons.filter(e => !e.createInDb === payload)
+                allPokemons: payload === 'All' ? [...state.copyAllPokemons]
+                :payload==='creado'? state.copyAllPokemons.filter(e => e.createdInDb)
+                :payload==='api'? state.copyAllPokemons.filter(e => !e.createdInDb)
                 :[...state.copyAllPokemons]
             }
 
@@ -57,8 +57,8 @@ const reducer = (state = initialState, {type, payload}) => {
                 ...state,
                 allPokemons: 
                 payload === 'allTypes' ? [...state.copyAllPokemons ]
-                :state.copyAllPokemons.filter(e => e.types.includes(payload))
-
+                :state.copyAllPokemons.filter(e => e.types?.some( e=> e.name=== payload))
+                
             }
         case ORDER_NAME:
             let orderName = [...state.allPokemons];

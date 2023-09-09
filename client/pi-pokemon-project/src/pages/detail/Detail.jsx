@@ -13,6 +13,7 @@ const Detail = () => {
     
     useEffect(() => {
         dispatch(getPokemonId(id));
+        
     }, [id]);
     
     return (

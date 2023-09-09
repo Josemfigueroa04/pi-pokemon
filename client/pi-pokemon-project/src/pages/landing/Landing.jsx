@@ -9,7 +9,6 @@ const Landing = () => {
                 <button className="button">Start</button>
             </Link>
             
-
         </div>
     )
 };

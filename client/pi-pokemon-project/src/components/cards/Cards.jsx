@@ -4,6 +4,7 @@ import Card from "../card/Card"
 const Cards = ({allPokemons}) => {
 
    const pokemonList = allPokemons;
+   console.log(pokemonList)
 
     return (
         <div className="cards">
