@@ -4,6 +4,7 @@ import { useSelector,useDispatch } from "react-redux";
 import { useEffect,useState } from "react";
 import  {getPokemons, getPokemonName}  from "../../redux/actions/index.js";
 import Filter from "../../components/filter/Filter.jsx";
+import { all } from "axios";
 
 
 const Home = () => {
@@ -11,11 +12,17 @@ const Home = () => {
     const dispatch = useDispatch();
     const [search, setSearch] = useState("");
     const [paginado, setPaginado] = useState(1);
+    
     const pokemonsPagina = 12;
     const indexUltimoPokemon = Math.ceil(allPokemons.length / pokemonsPagina);
     const indexPrimerPokemon = (paginado-1) * pokemonsPagina;
     const pokemonsPaginados = allPokemons.slice(indexPrimerPokemon, indexPrimerPokemon+pokemonsPagina);
     console.log(pokemonsPaginados);
+
+    useEffect(() => {
+        setPaginado(1);
+
+    },[allPokemons])
 
       function handleInputChange(e) {
         e.preventDefault();
@@ -41,6 +48,8 @@ const Home = () => {
             <button disabled={paginado<=1} onClick={()=>setPaginado(paginado-1)}>PREV</button>
             <button onClick={()=>setPaginado(indexUltimoPokemon)}>ultima pagina</button>
             <button onClick={()=>setPaginado(1)}>primera pagina</button>
+            <button></button>
+
             <Cards pokemonsPaginados={pokemonsPaginados}/>
         </div>
     )

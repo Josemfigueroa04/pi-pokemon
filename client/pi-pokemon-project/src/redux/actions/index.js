@@ -86,6 +86,13 @@ export const orderByAttack = (order) =>{
     }
 };
 
+export const resetDetail = () =>{
+    return{
+        type: RESET_DETAIL, 
+
+    }
+};
+
 
 
 

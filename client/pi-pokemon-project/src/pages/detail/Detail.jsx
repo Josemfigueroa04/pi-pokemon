@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useDispatch,useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getPokemonId } from "../../redux/actions/index.js";
+import { getPokemonId,resetDetail } from "../../redux/actions/index.js";
 
 
 const Detail = () => {
@@ -13,7 +13,9 @@ const Detail = () => {
     
     useEffect(() => {
         dispatch(getPokemonId(id));
-        
+        return () => {
+            dispatch(resetDetail());
+        }
     }, [id]);
     
     return (

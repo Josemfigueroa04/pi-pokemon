@@ -7,3 +7,4 @@ export const FILTER_POKE = 'FILTER_POKE';
 export const FILTER_TYPE = 'FILTER_TYPE';
 export const ORDER_NAME = 'ORDER_NAME';
 export const ORDER_ATTACK = 'ORDER_ATTACK';
+export const RESET_DETAIL = 'RESET_DETAIL';

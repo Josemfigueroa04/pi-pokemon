@@ -1,6 +1,6 @@
 import { GET_POKEMONS,GET_POKEMON_ID,GET_POKEMON_NAME,
          GET_TYPES,POST_POKEMON,FILTER_POKE,
-         FILTER_TYPE,ORDER_ATTACK,ORDER_NAME } from "../actionstype/index.js";
+         FILTER_TYPE,ORDER_ATTACK,ORDER_NAME,RESET_DETAIL } from "../actionstype/index.js";
 
 
 const initialState = {
@@ -83,6 +83,13 @@ const reducer = (state = initialState, {type, payload}) => {
                 :payload==='Dec'?orderAttack.sort((a, b) => { return b.attack-a.attack })
                 :[...state.copyAllPokemons]
             }
+
+        case RESET_DETAIL:
+            return {
+                ...state,
+                pokemonDetail: []
+            }
+
             
 
         
