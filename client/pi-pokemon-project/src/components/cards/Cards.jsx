@@ -1,10 +1,9 @@
 import "./Cards.style.css"
 import Card from "../card/Card"
 
-const Cards = ({allPokemons}) => {
+const Cards = ({pokemonsPaginados}) => {
 
-   const pokemonList = allPokemons;
-   console.log(pokemonList)
+   const pokemonList = pokemonsPaginados;
 
     return (
         <div className="cards">
