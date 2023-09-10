@@ -1,0 +1,125 @@
+.Main_Contaner_Form {
+    position: absolute;
+    top: 10px;
+    display: flex;
+    width: 500px;
+    justify-content: center;
+    align-items: center;
+    background-color: #222;
+    border-color: #585858;
+    border-radius: 5px;
+  }
+  .Main_Contaner_Form label {
+    color: #ae8bc5;
+    font-size: 17px;
+  }
+  .Main_Contaner_Form h2 {
+    color: #fff;
+  }
+  .btnHome img {
+    position: absolute;
+    top: 10px;
+    width: 30px;
+    opacity: 0.5;
+  }
+  
+  .btnHome img:hover {
+    opacity: 1;
+  }
+  .form_container {
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    padding: 1.2rem 1.4rem;
+  }
+  
+  .form_container span {
+    color: red;
+    font-size: 13px;
+  }
+  
+  /* inputs */
+  
+  .selection_container,
+  .Main_Contaner_Form form input,
+  .form_container form textarea {
+    padding: 0 1.6rem;
+    height: 2rem;
+    background-color: #201b1b;
+    outline: none;
+    border-radius: 0.4rem;
+    border: 1px solid white;
+    color: white;
+    transition: 0.2s ease-in-out border-color;
+    appearance: textfield;
+  }
+  
+  .inpuprating {
+    width: 60px;
+  }
+  
+  /* btns platform */
+  /* .btnPlatforms{
+      background-color: rgb(99, 95, 99) !important;
+      color: white !important;
+  } */
+  .platforms_container button {
+    font-size: 12px;
+    background-color: #222;
+    color: #fff;
+    opacity: 0.7;
+    cursor: pointer;
+  }
+  .platforms_container button:hover{
+    opacity: 1;
+    box-shadow: 0 0 10px rgb(243, 243, 243, 1);
+  }
+  
+  .active_genre {
+    background-color: purple !important;
+    color: white !important;
+  }
+  
+  /* numerinc field */
+  .numeric_fields {
+    position: relative;
+    left: -70px;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    column-gap: 0rem;
+    align-items: center;
+  }
+  .date_field,
+  .rating_field {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .rating_field {
+    width: 20px;
+  }
+  
+  .Genres_seleted {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    margin: 10px;
+    color: #fff;
+    background-color: #201b1b;
+    border-radius: 7px;
+    border: solid 1px;
+  }
+  
+  .div_container {
+    margin: 5px;
+  }
+  
+  @media (max-width: 750px) {
+    .Main_Contaner_Form {
+      left: 42px;
+      width: 80vw;
+      height: 100vh;
+    }
+  }

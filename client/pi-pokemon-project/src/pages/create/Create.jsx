@@ -1,28 +1,39 @@
-import { useState } from "react";
-import { useDispatch,useSelector } from "react-redux";
-import { postPokemon } from "../../redux/actions/index.js";
-import { validate } from "../../funtion/validate";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { postPokemon, getTypes } from "../../redux/actions/index.js";
+import style from "./Create.style.css";
+
 
 import "./Create.style.css";
 
 
 const Create = () => {
 
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const allTypes = useSelector((state) => state.allTypes);
+
+
+    useEffect(() => {
+        if (allTypes.length === 0) {
+            dispatch(getTypes());
+        }
+    }, []);
 
     //creo un estado local para crear el pokemon
 
     const [input, setInput] = useState({
         name: "",
-        imagen:"https://www.pokemon.com/static-assets/app/static3/img/og-default-image.jpeg",
-        hp: 100,
-        attack: 100,
-        defense: 100,
-        speed: 100,
-        height: 100,
-        weight: 100,
+        imagen: "",
+        hp: "",
+        attack:"" ,
+        defense:"" ,
+        speed: "",
+        height: "",
+        weight: "",
         types: [],
+       
     });
 
     const [errors, setErrors] = useState({
@@ -36,50 +47,113 @@ const Create = () => {
         weight: "",
         types: "",
     });
-    
 
+    const validate = () => {
+        if (!input.name) {
+            setErrors({ name: "*this field can not be blank" })
+            return;
+        }
+        if (input.name.length > 15) {
+            setErrors({ name: "*pokemon name cannot be longer than 15 characters" })
+            return;
+        }
+        if (!input.types.length) {
+            setErrors({ types: "*this field can not be blank" })
+            return;
+        }
+        if (input.types.length > 4) {
+            setErrors({ types: "*there can be no more than 4 types" })
+            return;
+        }
+        if (input.hp < 10 || input.hp > 200 && typeof input.hp !== "number") {
+            setErrors({ hp: "*this field must have a value between 10 and 200" })
+            return;
+        }
+        if (input.attack < 10 || input.attack > 200 && typeof input.attack !== "number") {
+            setErrors({ attack: "*this field must have a value between 10 and 200" })
+            return;
+        }
+        if (input.defense < 10 || input.defense > 200 && typeof input.defense !== "number") {
+            setErrors({ defense: "*this field must have a value between 10 and 200" })
+            return;
+        }
+        if (input.speed < 10 || input.speed > 200 && typeof input.speed !== "number") {
+            setErrors({ speed: "*this field must have a value between 10 and 200" })
+            return;
+        }
+        if (input.height < 10 || input.height > 200 && typeof input.height !== "number") {
+            setErrors({ height: "*this field must have a value between 10 and 200" })
+            return;
+        }
+        if (input.weight < 10 || input.weight > 200 && typeof input.weight !== "number") {
+            setErrors({ weight: "*this field must have a value between 10 and 200" })
+            return;
+        }
+        if (!input.imagen) {
+            setErrors({ imagen: "*this field can not be blank" })
+            return;
+        }
 
-    
-    //Logica para actualizar el estado del pokemon mediante el formulario
-    const handleInputChange = (e) => {
-        setInput({...input,[e.target.name]: e.target.value});
-        setErrors(validate({...input,[e.target.name]: e.target.value}));
-    };
-
-    //logica para controlar los tipos del pokemon mediante el formulario
-    const handleTypeSelectChange = (typeName) => {
-       if (input.types.includes(typeName)) {
-        // Si el tipo ya está en el array, lo eliminamos
-        const updatedTypes = input.types.filter((t) => t !== typeName);
-        setInput({...input, types: updatedTypes});
-        setErrors(validate({...input, types: updatedTypes}));
-         } else {
-             // Si el tipo no está en el array, lo agregamos
-            const updatedTypes = [...input.types, typeName];
-            setInput({...input, types: updatedTypes});
-            setErrors(validate({...input, types: updatedTypes}));
-        } 
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        dispatch(createPokemon(input));
-        setInput({
+        setErrors({
             name: "",
-            image: "",
+            imagen: "",
             hp: "",
             attack: "",
             defense: "",
             speed: "",
             height: "",
             weight: "",
-            types: [],
+            types: "",
         });
-        alert("Pokemon created successfully");
+    };
+
+    const disableButton = () => {
+        let disableAux = true;
+        for (let err in errors) {
+            if (errors[err] === "") disableAux = false;
+            else {
+                disableAux = true;
+                break;
+            }
+        }
+        return disableAux;
+    };
+
+    const handleDelete = (e) => {
+        setInput({
+            ...input, [e.target.name]: [...input[e.target.name].filter(p => p !== e.target.id)]
+        });
+    };
+
+
+    //Logica para actualizar el estado del pokemon mediante el formulario
+    const handleInputChange = (e) => {
+        // setInput({ ...input, [e.target.name]: e.target.value });
+        // setErrors(validate({ ...input, [e.target.name]: e.target.value }));
+        if (e.target.name === "types") {
+            if (input.types.includes(e.target.value)) return;
+            setInput({ ...input, [e.target.name]: [...input[e.target.name], e.target.value] })
+        } else {
+            setInput({ ...input, [e.target.name]: e.target.value });
+        }
+        validate({
+            ...input, [e.target.name]: e.target.value,
+        }, e.target.name);
+    };
+
+
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        dispatch(postPokemon(input));
+
     };
 
     return (
         <div className="create">
+            <a className="" onClick={() => navigate("/home")}>
+                <img src={"img"} title="Home" />
+            </a>
             <div className="create__container">
                 <h1>Create your Pokemon</h1>
                 <form onSubmit={handleSubmit}>
@@ -92,7 +166,7 @@ const Create = () => {
                                 name="name"
                                 value={input.name}
                             />
-                            {errors.name? <p className="danger">{errors.name}</p>:null}
+                            <span>{errors.name}</span>
                         </div>
                         <div className="create__container--inputs--image">
                             <label htmlFor="imagen">Imagen</label>
@@ -102,7 +176,7 @@ const Create = () => {
                                 name="imagen"
                                 value={input.imagen}
                             />
-                            {errors.imagen?<p className="danger">{errors.image}</p>:null}
+                            <span>{errors.imagen}</span>
                         </div>
                         <div className="create__container--inputs--hp">
                             <label htmlFor="hp">HP</label>
@@ -114,7 +188,7 @@ const Create = () => {
                                 name="hp"
                                 value={input.hp}
                             />
-                            {errors.hp?<p className="danger">{errors.hp}</p>:null}
+                            <span>{errors.hp}</span>
                         </div>
                         <div className="create__container--inputs--attack">
                             <label htmlFor="attack">Attack:</label>
@@ -126,7 +200,7 @@ const Create = () => {
                                 name="attack"
                                 value={input.attack}
                             />
-                            {errors.attack ? <p className="danger">{errors.attack}</p> : null}
+                            <span>{errors.attack}</span>
                         </div>
 
                         <div className="create__container--inputs--defense">
@@ -139,8 +213,8 @@ const Create = () => {
                                 name="defense"
                                 value={input.defense}
                             />
-                            {errors.defense ? <p className="danger">{errors.defense}</p> : null}
-                        
+                            <span>{errors.defense}</span>
+
                         </div>
                         <div className="create__container--inputs--speed">
                             <label htmlFor="speed">Speed</label>
@@ -152,7 +226,7 @@ const Create = () => {
                                 name="speed"
                                 value={input.speed}
                             />
-                            {errors.speed ? <p className="danger">{errors.speed}</p> : null}
+                            <span>{errors.speed}</span>
                         </div>
                         <div className="create__container--inputs--height">
                             <label htmlFor="height">Height</label>
@@ -164,46 +238,54 @@ const Create = () => {
                                 name="height"
                                 value={input.height}
                             />
-                            {errors.height ? <p className="danger">{errors.height}</p> : null}
-                            
+                            <span>{errors.height}</span>
+
                         </div>
                         <div className="create__container--inputs--weight">
                             <label htmlFor="weight">Weight</label>
                             <input
                                 onChange={handleInputChange}
-                                type="number"
+                                type="range"
                                 min={10}
                                 max={200}
                                 name="weight"
                                 value={input.weight}
                             />
-                            {errors.weight ? <p className="danger">{errors.weight}</p> : null}
-                            
+                            <span>{errors.weight}</span>
+
                         </div>
 
-                        <div className="create__container--inputs--types">
-
-                            <label htmlFor="types">Types</label>
-                        
-                    {/* inserto los botones segun la cantidad de tipos y cambio los estilos del boton dependiendo si esta seleccionado o no */}
-                    {allTypes?.map((t) => (
-                        input.types.includes(t.name) ? (
-                        <button key={t.id} onClick={() => handleTypeSelection(t.name)}>
-                        {t.name}
-                        </button>
-                        ) : (
-                        <button key={t.id} onClick={() => handleTypeSelection(t.name)}>
-                        {t.name}
-                        </button>
-                        )
-                    ))}
-                
-                {errors.types?<p>{errors.types}</p>:null}
-                
-                            
+                        <div className={style.div_container}>
+                            <label>Types</label>
+                            <select
+                                name="types"
+                                onChange={handleInputChange}
+                                className={style.selection_container}
+                            >
+                                {allTypes?.map((t) => (
+                                    <option
+                                        value={t.name}
+                                        // className={`${style.platform_btn} ${types.id === t.id ? style.active_genre : null
+                                        //     }`}
+                                        id={t.id}
+                                        key={t.id}
+                                    >
+                                        {t.name}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className={style.Genres_seleted}>
+                            {
+                                input.types.map((t) => <div key={t} id={t}>
+                                    <label >{t}</label> <button name='types' key={t} id={t} onClick={handleDelete}>X</button>
+                                </div>)
+                            }
                         </div>
                     </div>
-                    <button type="submit">Create Pokemon</button>
+                    <button disabled={disableButton()} type="submit">
+                        Create
+                    </button>
                 </form>
             </div>
         </div>

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_POKEMONS,GET_POKEMON_ID,GET_POKEMON_NAME, GET_TYPES, POST_POKEMON, FILTER_TYPE,FILTER_POKE,ORDER_ATTACK,ORDER_NAME} from '../actionstype/index.js';
+import { GET_POKEMONS,GET_POKEMON_ID,GET_POKEMON_NAME, GET_TYPES, POST_POKEMON, FILTER_TYPE,FILTER_POKE,ORDER_ATTACK,ORDER_NAME,RESET_DETAIL} from '../actionstype/index.js';
 
 export const getPokemons = () =>{
     return async (dispatch) => {
@@ -45,16 +45,17 @@ export const getTypes = () =>{
     }
 };
 
-export const postPokemon = (payload) =>{
+export const postPokemon = (state) =>{
     return async (dispatch) => {
         try{
-            const postPokemon = await axios.post('http://localhost:3001/pokemons', payload);
-            dispatch({type: POST_POKEMON, payload: postPokemon.data})
+       await axios.post('http://localhost:3001/pokemons/', state);
+            alert("Juego creado con exito!")
         }catch(error){
-            console.log(error)
+            alert(error.response.data);
         }
     }
 };
+
 
 export const filterPokemons= (createInDb) =>{
     return {

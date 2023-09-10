@@ -41,9 +41,9 @@ const getPokemonByIdHandler = async(req, res) => {
 };
 
 const createPokemonHandler = async (req, res) => {
-    const {name, imagen, hp, attack, defense, speed, height, weight,type,createInDb} = req.body;
+    const {name, imagen, hp, attack, defense, speed, height, weight,type} = req.body;
     try {
-        const response = await createPokemonControllers(name, imagen, hp, attack, defense, speed, height, weight,type,createInDb);
+        const response = await createPokemonControllers(name, imagen, hp, attack, defense, speed, height, weight,type);
         res.status(200).json(response);
     }catch (error){
         res.status(400).json({error:error.message});

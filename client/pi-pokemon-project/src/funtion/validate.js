@@ -1,29 +1,37 @@
-function isImageFile(fileName) {
-    const imageExtensions = [".jpg", ".jpeg", ".png", ".gif"];
-    const extension = fileName.substr(fileName.lastIndexOf(".")).toLowerCase();
-    return imageExtensions.includes(extension);
-}
-
-const validate = (inputs) => {
+const validate = (input, li) => {
     let errors = {};
-
-    if(!inputs.name)errors.name = "*this field can not be blank";
-    if(inputs.name.length > 15)errors.name = "*pokemon name cannot be longer than 15 characters";
-
-    if(!inputs.types.length)errors.types = "*this field can not be blank";
-    if(inputs.types.length > 4)errors.types = "*there can be no more than 4 types";
-
-    if(inputs.hp < 10 || inputs.hp > 200 && typeof inputs.hp !== "number")errors.hp = "*this field must have a value between 10 and 200";
-    if(inputs.damage < 10 || inputs.damage > 200 && typeof inputs.damage !== "number")errors.damage = "*this field must have a value between 10 and 200";
-    if(inputs.defense < 10 || inputs.defense > 200 && typeof inputs.defense !== "number")errors.defense = "*this field must have a value between 10 and 200";
-    if(inputs.speed < 10 || inputs.speed > 200 && typeof inputs.speed !== "number")errors.speed = "*this field must have a value between 10 and 200";
-
-    if (inputs.img) {
-        const isImage = isImageFile(inputs.img);
-        if (!isImage) errors.img = "*invalid image format";
-    };
-    
+       
+    if (!input.name) {
+       errors.name = "Enter a name";
+    }
+    if (!/\.(jpg|png|gif)$/i.test(input.imagen)){ 
+       errors.imagen = "The url you are trying to place is not valid";
+    }
+    if (input.hp > 150 || input.hp < 1 || !/\d/g.test(input.hp)) {
+       errors.hp = "The value must be between 1 and 150 of Life";
+    }
+    if (input.attack > 150 || input.attack < 1 || !/\d/g.test(input.attack)) {
+       errors.attack = "The value must be between 1 and 150 attack";
+    }
+    if (input.defense > 150 || input.defense < 1 || !/\d/g.test(input.defense)) {
+       errors.defense = "The value must be between 1 and 150 defense";
+    }
+    if (input.speed > 150 || input.speed < 1 || !/\d/g.test(input.speed)) {
+       errors.speed = "The value must be between 1 and 150 speed";
+    }
+    if (input.weight > 150 || input.weight < 1 || !/\d/g.test(input.weight)) {
+       errors.weight = "The value must be between 1 and 150 weight";
+    }
+    if (input.height > 150 || input.height < 1 || !/\d/g.test(input.height)) {
+       errors.height = "The value must be between 1 and 150 height";
+    }
+    if(!li) {
+       errors.types ="Choose a type of Pokemon"
+    } else {
+       errors.types = null
+    }
     return errors
-}
-
-export default validate;
+ }
+ 
+ 
+ export default validate;
