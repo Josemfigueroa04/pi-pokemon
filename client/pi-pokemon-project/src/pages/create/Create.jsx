@@ -1,45 +1,64 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import { postPokemon } from "../../redux/actions/index.js";
+import { validate } from "../../funtion/validate";
 
 import "./Create.style.css";
 
 
 const Create = () => {
+
+    const dispatch = useDispatch();
+    const allTypes = useSelector((state) => state.allTypes);
+
+    //creo un estado local para crear el pokemon
+
     const [input, setInput] = useState({
         name: "",
-        image: "",
+        imagen:"https://www.pokemon.com/static-assets/app/static3/img/og-default-image.jpeg",
+        hp: 100,
+        attack: 100,
+        defense: 100,
+        speed: 100,
+        height: 100,
+        weight: 100,
+        types: [],
+    });
+
+    const [errors, setErrors] = useState({
+        name: "",
+        imagen: "",
         hp: "",
         attack: "",
         defense: "",
         speed: "",
         height: "",
         weight: "",
-        types: [],
+        types: "",
     });
+    
 
-    const [errors, setErrors] = useState({});
 
-    const dispatch = useDispatch();
-
+    
+    //Logica para actualizar el estado del pokemon mediante el formulario
     const handleInputChange = (e) => {
-        setInput({
-            ...input,
-            [e.target.name]: e.target.value,
-        });
-        setErrors(
-            validate({
-                ...input,
-                [e.target.name]: e.target.value,
-            })
-        );
+        setInput({...input,[e.target.name]: e.target.value});
+        setErrors(validate({...input,[e.target.name]: e.target.value}));
     };
 
-    const handleSelectChange = (e) => {
-        setInput({
-            ...input,
-            types: [...input.types, e.target.value],
-        });
+    //logica para controlar los tipos del pokemon mediante el formulario
+    const handleTypeSelectChange = (typeName) => {
+       if (input.types.includes(typeName)) {
+        // Si el tipo ya está en el array, lo eliminamos
+        const updatedTypes = input.types.filter((t) => t !== typeName);
+        setInput({...input, types: updatedTypes});
+        setErrors(validate({...input, types: updatedTypes}));
+         } else {
+             // Si el tipo no está en el array, lo agregamos
+            const updatedTypes = [...input.types, typeName];
+            setInput({...input, types: updatedTypes});
+            setErrors(validate({...input, types: updatedTypes}));
+        } 
     };
 
     const handleSubmit = (e) => {
@@ -62,138 +81,126 @@ const Create = () => {
     return (
         <div className="create">
             <div className="create__container">
-                <h1>Create your own Pokemon</h1>
+                <h1>Create your Pokemon</h1>
                 <form onSubmit={handleSubmit}>
                     <div className="create__container--inputs">
                         <div className="create__container--inputs--name">
-                            <label htmlFor="name">Name</label>
+                            <label>Name</label>
                             <input
                                 onChange={handleInputChange}
                                 type="text"
                                 name="name"
                                 value={input.name}
                             />
-                            {errors.name && (
-                                <p className="danger">{errors.name}</p>
-                            )}
+                            {errors.name? <p className="danger">{errors.name}</p>:null}
                         </div>
                         <div className="create__container--inputs--image">
-                            <label htmlFor="image">Image</label>
+                            <label htmlFor="imagen">Imagen</label>
                             <input
                                 onChange={handleInputChange}
                                 type="text"
-                                name="image"
-                                value={input.image}
+                                name="imagen"
+                                value={input.imagen}
                             />
-                            {errors.image && (
-                                <p className="danger">{errors.image}</p>
-                            )}
+                            {errors.imagen?<p className="danger">{errors.image}</p>:null}
                         </div>
                         <div className="create__container--inputs--hp">
                             <label htmlFor="hp">HP</label>
                             <input
                                 onChange={handleInputChange}
-                                type="number"
+                                type="range"
+                                min={10}
+                                max={200}
                                 name="hp"
                                 value={input.hp}
                             />
-                            {errors.hp && (
-                                <p className="danger">{errors.hp}</p>
-                            )}
+                            {errors.hp?<p className="danger">{errors.hp}</p>:null}
                         </div>
                         <div className="create__container--inputs--attack">
-                            <label htmlFor="attack">Attack</label>
+                            <label htmlFor="attack">Attack:</label>
                             <input
                                 onChange={handleInputChange}
-                                type="number"
+                                type="range"
+                                min={10}
+                                max={200}
                                 name="attack"
                                 value={input.attack}
                             />
-                            {errors.attack && (
-                                <p className="danger">{errors.attack}</p>
-                            )}
+                            {errors.attack ? <p className="danger">{errors.attack}</p> : null}
                         </div>
 
                         <div className="create__container--inputs--defense">
                             <label htmlFor="defense">Defense</label>
                             <input
                                 onChange={handleInputChange}
-                                type="number"
+                                type="range"
+                                min={10}
+                                max={200}
                                 name="defense"
                                 value={input.defense}
                             />
-                            {errors.defense && (
-                                <p className="danger">{errors.defense}</p>
-                            )}
-
+                            {errors.defense ? <p className="danger">{errors.defense}</p> : null}
+                        
                         </div>
                         <div className="create__container--inputs--speed">
                             <label htmlFor="speed">Speed</label>
                             <input
                                 onChange={handleInputChange}
-                                type="number"
+                                type="range"
+                                min={10}
+                                max={200}
                                 name="speed"
                                 value={input.speed}
                             />
-                            {errors.speed && (
-                                <p className="danger">{errors.speed}</p>
-                            )}
+                            {errors.speed ? <p className="danger">{errors.speed}</p> : null}
                         </div>
                         <div className="create__container--inputs--height">
                             <label htmlFor="height">Height</label>
                             <input
                                 onChange={handleInputChange}
-                                type="number"
+                                type="range"
+                                min={10}
+                                max={200}
                                 name="height"
                                 value={input.height}
                             />
-                            {errors.height && (
-                                <p className="danger">{errors.height}</p>
-                            )}
+                            {errors.height ? <p className="danger">{errors.height}</p> : null}
+                            
                         </div>
                         <div className="create__container--inputs--weight">
                             <label htmlFor="weight">Weight</label>
                             <input
                                 onChange={handleInputChange}
                                 type="number"
+                                min={10}
+                                max={200}
                                 name="weight"
                                 value={input.weight}
                             />
-                            {errors.weight && (
-                                <p className="danger">{errors.weight}</p>
-                            )}
-
+                            {errors.weight ? <p className="danger">{errors.weight}</p> : null}
+                            
                         </div>
 
                         <div className="create__container--inputs--types">
 
                             <label htmlFor="types">Types</label>
-                            <select
-                                onChange={handleSelectChange}
-                                name="types"
-                                value={input.types}
-                            >
-                                <option value="normal">Normal</option>
-                                <option value="fighting">Fighting</option>
-                                <option value="flying">Flying</option>
-                                <option value="poison">Poison</option>
-                                <option value="ground">Ground</option>
-                                <option value="rock">Rock</option>
-                                <option value="bug">Bug</option>
-                                <option value="ghost">Ghost</option>
-                                <option value="steel">Steel</option>
-                                <option value="fire">Fire</option>
-                                <option value="water">Water</option>
-                                <option value="grass">Grass</option>
-                                <option value="electric">Electric</option>
-                                <option value="psychic">Psychic</option>
-                                <option value="ice">Ice</option>
-                                <option value="dragon">Dragon</option>
-                                <option value="dark">Dark</option>
-                                <option value="fairy">Fairy</option>
-                                <option value="unknown">Unknown</option>
-                                <option value="shadow">Shadow</option>
-                            </select>
+                        
+                    {/* inserto los botones segun la cantidad de tipos y cambio los estilos del boton dependiendo si esta seleccionado o no */}
+                    {allTypes?.map((t) => (
+                        input.types.includes(t.name) ? (
+                        <button key={t.id} onClick={() => handleTypeSelection(t.name)}>
+                        {t.name}
+                        </button>
+                        ) : (
+                        <button key={t.id} onClick={() => handleTypeSelection(t.name)}>
+                        {t.name}
+                        </button>
+                        )
+                    ))}
+                
+                {errors.types?<p>{errors.types}</p>:null}
+                
+                            
                         </div>
                     </div>
                     <button type="submit">Create Pokemon</button>
