@@ -1,17 +1,20 @@
-const {Pokemon, Type} = require('../../db');
+const { Pokemon, Type } = require('../../db');
 const axios = require('axios');
 
 const getPokemonDbControllers = async () => {
     // busco todos los pokemones en la base de datos
-    const pokemonDb = await Pokemon.findAll({include: 
-        {model:Type,
-        attributes:['name'],
-        through:{
-            attributes:[]
+    const pokemonDb = await Pokemon.findAll({
+        include:
+        {
+            model: Type,
+            attributes: ['name'],
+            through: {
+                attributes: []
+            }
         }
-    }});
-   
-    
+    });
+
+
     // devuelvo los pokemones encontrados con las propiedades que me interesan
     return pokemonDb.map(pokemon => {
         return {
@@ -32,7 +35,7 @@ const getPokemonDbControllers = async () => {
     })
 }
 
-    module.exports = {
-        getPokemonDbControllers
-    }
+module.exports = {
+    getPokemonDbControllers
+}
 

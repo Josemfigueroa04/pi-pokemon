@@ -1,24 +1,25 @@
-const {Pokemon, Type} = require('../../db');
+const { Pokemon, Type } = require('../../db');
 const axios = require('axios');
 
 const getPokemonByIdControllers = async (id) => {
     //verifico que el ID no sea un numero
-    if (isNaN(Number(id))){
+    if (isNaN(Number(id))) {
         //busco el pokemon en la base de datos
         const findPokemon = await Pokemon.findByPk(id, {
-            include:{
-            model:Type,
-            attributes:['name'],
-            through:{
-                attributes:[]
+            include: {
+                model: Type,
+                attributes: ['name'],
+                through: {
+                    attributes: []
+                }
             }
-        }});
+        });
         if (!findPokemon) throw new Error('Pokemon not found');
         return findPokemon;
     }
 
     //busco el pokemon en la API
-    const {data} = (await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`));
+    const { data } = (await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`));
     const pokemonId = {
         id: id,
         name: data.name,

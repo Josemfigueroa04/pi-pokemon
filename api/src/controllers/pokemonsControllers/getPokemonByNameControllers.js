@@ -12,12 +12,14 @@ const getPokemonByNameControllers = async (name) => {
             name:
                 { [Op.iLike]: `${name}%` }
         }, include:
-        {model:Type,
-        attributes:['name'],
-        through:{
-            attributes:[]
+        {
+            model: Type,
+            attributes: ['name'],
+            through: {
+                attributes: []
+            }
         }
-    }});
+    });
 
     try {
         const { data } = (await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`));
@@ -38,10 +40,13 @@ const getPokemonByNameControllers = async (name) => {
         return findPokemon.concat([pokemonName]);
     }
     catch (error) {
-        if (!findPokemon.length) {throw new Error('Pokemon not found')}
-        return findPokemon 
+        if (!findPokemon.length) { 
+            throw{
+                status:false,
+                message:'Pokemon not found'}
+            }
+        return findPokemon
     }
-
 
 }
 

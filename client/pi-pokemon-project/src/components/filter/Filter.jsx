@@ -1,9 +1,11 @@
 import { useEffect } from 'react';
-import {orderByName,orderByAttack, filterPokemons, filterType,getPokemons,getTypes} from '../../redux/actions/index';
-import { useDispatch,useSelector } from 'react-redux';
+import { orderByName, orderByAttack, filterPokemons, filterType, getPokemons, getTypes } from '../../redux/actions/index';
+import { useDispatch, useSelector } from 'react-redux';
+import style from './Filter.module.css';
 
 
-const Filter =() => {
+
+const Filter = () => {
     const dispatch = useDispatch();
     const allPokemons = useSelector((state) => state.allPokemons);
     const allTypes = useSelector((state) => state.allTypes);
@@ -29,44 +31,39 @@ const Filter =() => {
         dispatch(filterType(e.target.value))
     }
 
-
-
     return (
-        <div>
-            <select onChange={handleOrderName}>
-                <option value="default">Name</option>
-                <option value="Asc">A-Z</option>
-                <option value="Dec">Z-A</option>
-            </select>
-
-            <select onChange={handleOrderAttack}>
-                <option value="default">Attack</option>
-                <option value="Asc">Attack Asc</option>
-                <option value="Dec">Attack Desc</option>
-            </select>
-
-            <select onChange={handleFilter}>
-                <option value="All">Filter</option>
-                <option value="creado">Created</option>
-                <option value="api">Api</option>
-            </select>
-
-            <select onClick={handleFilterType} >
-                <option value="allTypes">All Types</option>
-                {allTypes?.map((t) => (
-                    <option key={t.id} value={t.name}>
-                        {t.name}
-                    </option>
-                ))}
-        
+        <div className={style.container}>
+            <div>
+                <select onChange={handleOrderName}>
+                    <option value="default">Name</option>
+                    <option value="Asc">A-Z</option>
+                    <option value="Dec">Z-A</option>
                 </select>
 
+                <select onChange={handleOrderAttack}>
+                    <option value="default">Attack</option>
+                    <option value="Asc">Attack Asc</option>
+                    <option value="Dec">Attack Desc</option>
+                </select>
+            </div>
 
-        </div>  
-        
+            <div>
+                <select onChange={handleFilter}>
+                    <option value="All">Filter</option>
+                    <option value="creado">Created</option>
+                    <option value="api">Api</option>
+                </select>
 
-
-
+                <select onClick={handleFilterType} >
+                    <option value="allTypes">All Types</option>
+                    {allTypes?.map((t) => (
+                        <option key={t.id} value={t.name}>
+                            {t.name}
+                        </option>
+                    ))}
+                </select>
+            </div>
+        </div>
     )
 
 }

@@ -1,23 +1,24 @@
-import "./Cards.style.css"
+
 import Card from "../card/Card"
+import  style  from "./Cards.module.css";
 
-const Cards = ({pokemonsPaginados}) => {
+const Cards = ({ pokemonsPaginados }) => {
 
-   const pokemonList = pokemonsPaginados;
+    const pokemonList = pokemonsPaginados;
 
     return (
-        <div className="cards">
-            <div className="cards__container">
-                {  pokemonList?.map((pokemon) => (
-                    <Card
+
+        <div className={style.cards_container}>
+            {pokemonList?.map((pokemon) => (
+                <Card
                     key={pokemon.id}
                     pokemon={pokemon}
-                    />
-                ))}
-            </div>
+                />
+            ))}
         </div>
+
     );
-    }
+}
 
 export default Cards;
 

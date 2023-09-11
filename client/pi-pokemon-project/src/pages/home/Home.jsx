@@ -1,10 +1,11 @@
 import Nav from "../../components/navbar/Nav";
 import Cards from "../../components/cards/Cards";
-import { useSelector,useDispatch } from "react-redux";
-import { useEffect,useState } from "react";
-import  {getPokemons, getPokemonName}  from "../../redux/actions/index.js";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { getPokemons, getPokemonName } from "../../redux/actions/index.js";
 import Filter from "../../components/filter/Filter.jsx";
-import { all } from "axios";
+import './Home.style.css'
+
 
 
 const Home = () => {
@@ -12,19 +13,23 @@ const Home = () => {
     const dispatch = useDispatch();
     const [search, setSearch] = useState("");
     const [paginado, setPaginado] = useState(1);
-    
+
     const pokemonsPagina = 12;
     const indexUltimoPokemon = Math.ceil(allPokemons.length / pokemonsPagina);
-    const indexPrimerPokemon = (paginado-1) * pokemonsPagina;
-    const pokemonsPaginados = allPokemons.slice(indexPrimerPokemon, indexPrimerPokemon+pokemonsPagina);
+    const indexPrimerPokemon = (paginado - 1) * pokemonsPagina;
+    const pokemonsPaginados = allPokemons.slice(indexPrimerPokemon, indexPrimerPokemon + pokemonsPagina);
     console.log(pokemonsPaginados);
+    const numeroPaginas = [];
+    for (let i = 1; i <= indexUltimoPokemon; i++) {
+        numeroPaginas.push(i);
+    }
+
 
     useEffect(() => {
         setPaginado(1);
+    }, [allPokemons]);
 
-    },[allPokemons])
-
-      function handleInputChange(e) {
+    function handleInputChange(e) {
         e.preventDefault();
         setSearch(e.target.value);
     }
@@ -37,20 +42,33 @@ const Home = () => {
 
     useEffect(() => {
         dispatch(getPokemons());
+        return () => {
+            dispatch(getPokemons());
+        }
     }, []);
 
 
     return (
         <div>
-            <Nav handleInputChange = {handleInputChange} handleSubmit= {handleSubmit} />
-            <Filter/>
-            <button disabled={paginado===indexUltimoPokemon} onClick={()=>setPaginado(paginado+1)}>NEXT</button>
-            <button disabled={paginado<=1} onClick={()=>setPaginado(paginado-1)}>PREV</button>
-            <button onClick={()=>setPaginado(indexUltimoPokemon)}>ultima pagina</button>
-            <button onClick={()=>setPaginado(1)}>primera pagina</button>
-            <button></button>
+            <Nav handleInputChange={handleInputChange} handleSubmit={handleSubmit} />
 
-            <Cards pokemonsPaginados={pokemonsPaginados}/>
+                <Filter />
+            
+            <div className="pags">
+                <button onClick={() => setPaginado(1)}>primera pagina</button>
+                <button disabled={paginado <= 1} onClick={() => setPaginado(paginado - 1)}>PREV</button>
+                <div className="num_pag">
+                    {numeroPaginas?.map((numero) => (
+                        <button  key={numero} onClick={() => setPaginado(numero)}>{numero}</button>
+                    ))}
+                </div>
+                <button disabled={paginado === indexUltimoPokemon} onClick={() => setPaginado(paginado + 1)}>NEXT</button>
+                <button onClick={() => setPaginado(indexUltimoPokemon)}>ultima pagina</button>
+            </div>
+
+
+
+            <Cards pokemonsPaginados={pokemonsPaginados} />
         </div>
     )
 }

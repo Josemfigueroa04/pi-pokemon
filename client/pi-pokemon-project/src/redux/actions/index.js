@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { GET_POKEMONS,GET_POKEMON_ID,GET_POKEMON_NAME, GET_TYPES, POST_POKEMON, FILTER_TYPE,FILTER_POKE,ORDER_ATTACK,ORDER_NAME,RESET_DETAIL} from '../actionstype/index.js';
 
+
 export const getPokemons = () =>{
     return async (dispatch) => {
         try{
@@ -48,9 +49,11 @@ export const getTypes = () =>{
 export const postPokemon = (state) =>{
     return async (dispatch) => {
         try{
-       await axios.post('http://localhost:3001/pokemons/', state);
+         await axios.post('http://localhost:3001/pokemons/', state);
+         console.log("pokemon creado con exito")
             alert("Juego creado con exito!")
         }catch(error){
+            console.log("pokemon no creado")
             alert(error.response.data);
         }
     }

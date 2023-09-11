@@ -1,15 +1,15 @@
-const {Pokemon, Type} = require('../../db');
+const { Pokemon, Type } = require('../../db');
 const axios = require('axios');
 
 const getPokemonApiControllers = async () => {
 
-let allPokemon = []; // Array para almacenar todos los pokemones
+  let allPokemon = []; // Array para almacenar todos los pokemones
 
   let url = 'https://pokeapi.co/api/v2/pokemon'; // URL inicial
 
-  let i=0;
+  let i = 0;
 
-  while (i<3) {
+  while (i < 3) {
     const { data } = await axios.get(url);
     const pokemonApi = data.results.map(async (pokemon) => {
       const { data } = await axios.get(pokemon.url);
@@ -39,5 +39,5 @@ let allPokemon = []; // Array para almacenar todos los pokemones
 };
 
 module.exports = {
-    getPokemonApiControllers
+  getPokemonApiControllers
 }

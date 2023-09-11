@@ -2,10 +2,8 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { postPokemon, getTypes } from "../../redux/actions/index.js";
-import style from "./Create.style.css";
 
 
-import "./Create.style.css";
 
 
 const Create = () => {
@@ -16,9 +14,9 @@ const Create = () => {
 
 
     useEffect(() => {
-        if (allTypes.length === 0) {
+        
             dispatch(getTypes());
-        }
+        
     }, []);
 
     //creo un estado local para crear el pokemon
@@ -27,14 +25,17 @@ const Create = () => {
         name: "",
         imagen: "",
         hp: "",
-        attack:"" ,
-        defense:"" ,
+        attack: "",
+        defense: "",
         speed: "",
         height: "",
         weight: "",
-        types: [],
-       
+        type: [],
+
     });
+    console.log(input);
+    console.log(allTypes);
+
 
     const [errors, setErrors] = useState({
         name: "",
@@ -45,7 +46,7 @@ const Create = () => {
         speed: "",
         height: "",
         weight: "",
-        types: "",
+        type: "",
     });
 
     const validate = () => {
@@ -57,11 +58,11 @@ const Create = () => {
             setErrors({ name: "*pokemon name cannot be longer than 15 characters" })
             return;
         }
-        if (!input.types.length) {
+        if (!input.type.length) {
             setErrors({ types: "*this field can not be blank" })
             return;
         }
-        if (input.types.length > 4) {
+        if (input.type.length > 4) {
             setErrors({ types: "*there can be no more than 4 types" })
             return;
         }
@@ -103,7 +104,7 @@ const Create = () => {
             speed: "",
             height: "",
             weight: "",
-            types: "",
+            type: "",
         });
     };
 
@@ -121,17 +122,16 @@ const Create = () => {
 
     const handleDelete = (e) => {
         setInput({
-            ...input, [e.target.name]: [...input[e.target.name].filter(p => p !== e.target.id)]
+            ...input, [e.target.name]: [...input[e.target.name].filter(t => t !== e.target.id)]
         });
     };
 
 
     //Logica para actualizar el estado del pokemon mediante el formulario
     const handleInputChange = (e) => {
-        // setInput({ ...input, [e.target.name]: e.target.value });
-        // setErrors(validate({ ...input, [e.target.name]: e.target.value }));
-        if (e.target.name === "types") {
-            if (input.types.includes(e.target.value)) return;
+
+        if (e.target.name === "type") {
+            if (input.type.includes(e.target.value)) return;
             setInput({ ...input, [e.target.name]: [...input[e.target.name], e.target.value] })
         } else {
             setInput({ ...input, [e.target.name]: e.target.value });
@@ -254,35 +254,23 @@ const Create = () => {
                             <span>{errors.weight}</span>
 
                         </div>
-
-                        <div className={style.div_container}>
-                            <label>Types</label>
-                            <select
-                                name="types"
-                                onChange={handleInputChange}
-                                className={style.selection_container}
-                            >
-                                {allTypes?.map((t) => (
-                                    <option
-                                        value={t.name}
-                                        // className={`${style.platform_btn} ${types.id === t.id ? style.active_genre : null
-                                        //     }`}
-                                        id={t.id}
-                                        key={t.id}
-                                    >
-                                        {t.name}
-                                    </option>
-                                ))}
+                        <div className="create__container--inputs--types">
+                            <label >Type</label>
+                            <select name="type"  onChange={handleInputChange}>
+                                {allTypes?.map((t) => (<option value={t.name} key={t.id} id={t.id}> {t.name}</option>))}
                             </select>
+
+                            <span>{errors.type}</span>
+
                         </div>
-                        <div className={style.Genres_seleted}>
-                            {
-                                input.types.map((t) => <div key={t} id={t}>
-                                    <label >{t}</label> <button name='types' key={t} id={t} onClick={handleDelete}>X</button>
-                                </div>)
-                            }
+                        <div>
+                            {input.type.map((t) => <div id={t} key={t}>
+                                <label >{t}</label> <button name="type" key={t} id={t} onClick={handleDelete}>X</button>
+                                </div>)}
                         </div>
+
                     </div>
+
                     <button disabled={disableButton()} type="submit">
                         Create
                     </button>

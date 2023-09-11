@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useDispatch,useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getPokemonId,resetDetail } from "../../redux/actions/index.js";
+import style from "./Detail.module.css";
 
 
 const Detail = () => {
@@ -19,11 +20,11 @@ const Detail = () => {
     }, [id]);
     
     return (
-        <>
+        <div className={style.detail}>
         {pokemonId ? (
-            <div>
-                <h1>{pokemonId?.name}</h1>
-                <img src={pokemonId?.imagen} alt={pokemonId.name}/>
+            <div className={style.container}>
+                 <img src={pokemonId?.imagen} alt={pokemonId.name}/>   
+                <h3>{pokemonId?.name}</h3>
                 <p>HP: {pokemonId?.hp}</p>
                 <p>Attack: {pokemonId?.attack}</p>
                 <p>Defense: {pokemonId?.defense}</p>
@@ -31,12 +32,12 @@ const Detail = () => {
                 <p>Height: {pokemonId?.height}</p>
                 <p>Weight: {pokemonId?.weight}</p>
                 <p>Types: {pokemonId?.types && pokemonId.types.map((t) => t.name).join(", ")}</p>
-                
             </div>
         ) : (
             <p>Loading...</p>
         )}
-        </>
+        </div>
+        
     )
 }
 

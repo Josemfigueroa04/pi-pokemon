@@ -1,0 +1,32 @@
+body {
+    background-image: url(../../imagenes/pokeFondo.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+/* .filter{
+    display: flex;
+    flex-direction: row;  
+    width: 100vw;
+    margin: 10px;
+} */
+
+.pags{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    gap: 10px;
+
+}
+
+.num_pag{
+    gap: 10px;
+    display: flex;
+    flex-direction: row;
+
+}
+
