@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useDispatch,useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getPokemonId,resetDetail } from "../../redux/actions/index.js";
+import { Link } from "react-router-dom";
 import style from "./Detail.module.css";
 
 
@@ -32,6 +33,8 @@ const Detail = () => {
                 <p>Height: {pokemonId?.height}</p>
                 <p>Weight: {pokemonId?.weight}</p>
                 <p>Types: {pokemonId?.types && pokemonId.types.map((t) => t.name).join(", ")}</p>
+                <Link to="/home"> <button>Home</button></Link>
+
             </div>
         ) : (
             <p>Loading...</p>

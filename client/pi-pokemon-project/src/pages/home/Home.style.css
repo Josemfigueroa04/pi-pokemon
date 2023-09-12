@@ -6,13 +6,6 @@ body {
     background-attachment: fixed;
 }
 
-/* .filter{
-    display: flex;
-    flex-direction: row;  
-    width: 100vw;
-    margin: 10px;
-} */
-
 .pags{
     display: flex;
     flex-direction: row;
@@ -20,13 +13,17 @@ body {
     align-items: center;
     width: 100vw;
     gap: 10px;
-
 }
 
 .num_pag{
     gap: 10px;
     display: flex;
     flex-direction: row;
-
 }
-
+.info{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+ 
+}

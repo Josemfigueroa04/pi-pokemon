@@ -9,14 +9,14 @@ const getPokemonApiControllers = async () => {
 
   let i = 0;
 
-  while (i < 3) {
+  while (i < 7) {
     const { data } = await axios.get(url);
     const pokemonApi = data.results.map(async (pokemon) => {
       const { data } = await axios.get(pokemon.url);
       return {
         id: data.id,
         name: data.name,
-        imagen: data.sprites.front_default,
+        imagen: data.sprites.other["dream_world"].front_default,
         hp: data.stats[0].base_stat,
         attack: data.stats[1].base_stat,
         defense: data.stats[2].base_stat,

@@ -3,11 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { postPokemon, getTypes } from "../../redux/actions/index.js";
 
-
-
-
 const Create = () => {
-
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const allTypes = useSelector((state) => state.allTypes);
@@ -54,6 +50,11 @@ const Create = () => {
             setErrors({ name: "*this field can not be blank" })
             return;
         }
+        if (!input.imagen) {
+            setErrors({ imagen: "*this field can not be blank" })
+            return;
+        }
+
         if (input.name.length > 15) {
             setErrors({ name: "*pokemon name cannot be longer than 15 characters" })
             return;
@@ -90,11 +91,7 @@ const Create = () => {
             setErrors({ weight: "*this field must have a value between 10 and 200" })
             return;
         }
-        if (!input.imagen) {
-            setErrors({ imagen: "*this field can not be blank" })
-            return;
-        }
-
+        
         setErrors({
             name: "",
             imagen: "",
@@ -146,7 +143,6 @@ const Create = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(postPokemon(input));
-
     };
 
     return (
@@ -188,6 +184,7 @@ const Create = () => {
                                 name="hp"
                                 value={input.hp}
                             />
+                             <p>{input.hp}</p>
                             <span>{errors.hp}</span>
                         </div>
                         <div className="create__container--inputs--attack">
@@ -200,6 +197,7 @@ const Create = () => {
                                 name="attack"
                                 value={input.attack}
                             />
+                            <p>{input.attack}</p>
                             <span>{errors.attack}</span>
                         </div>
 
@@ -213,6 +211,7 @@ const Create = () => {
                                 name="defense"
                                 value={input.defense}
                             />
+                            <p>{input.defense}</p>
                             <span>{errors.defense}</span>
 
                         </div>
@@ -226,6 +225,7 @@ const Create = () => {
                                 name="speed"
                                 value={input.speed}
                             />
+                            <p>{input.speed}</p>
                             <span>{errors.speed}</span>
                         </div>
                         <div className="create__container--inputs--height">
@@ -238,6 +238,7 @@ const Create = () => {
                                 name="height"
                                 value={input.height}
                             />
+                            <p>{input.height}</p>
                             <span>{errors.height}</span>
 
                         </div>
@@ -251,6 +252,7 @@ const Create = () => {
                                 name="weight"
                                 value={input.weight}
                             />
+                            <p>{input.weight}</p>
                             <span>{errors.weight}</span>
 
                         </div>

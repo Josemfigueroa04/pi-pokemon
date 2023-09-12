@@ -26,7 +26,7 @@ const getPokemonByNameControllers = async (name) => {
         const pokemonName = {
             id: data.id,
             name: data.name,
-            imagen: data.sprites.front_default,
+            imagen: data.sprites.other["dream_world"].front_default,
             hp: data.stats[0].base_stat,
             attack: data.stats[1].base_stat,
             defense: data.stats[2].base_stat,
