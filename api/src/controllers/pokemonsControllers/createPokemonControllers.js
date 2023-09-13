@@ -5,12 +5,27 @@ const { getTypeControllers } = require('../typesControllers/getTypeControllers')
 const createPokemonControllers = async (name, imagen, hp, attack, defense, speed, height, weight, type) => {
 
     //creacion de pokemon validacion de datos
-    if (!name || !imagen || !hp || !attack || !defense || !speed) {
+    if (!name  || !hp || !attack || !defense || !speed) {
         throw {
             status: false,
             message: 'Missing required information'
         }
     };
+
+    //convierto el nombre a minuscula
+    name = name.toLowerCase();
+
+    //valido que el nombre no contenga numeros
+    if (name.match(/\d+/g)) {
+        throw {
+            status: false,
+            message: 'The name must not contain numbers'
+        }
+    };
+    if (!imagen){
+        imagen = 'https://pokemonletsgo.pokemon.com/assets/img/common/char-pikachu.png'
+    }
+  
 
     //busco el pokemon en la base de datos
     const pokemonExists = await Pokemon.findOne({ where: { name } });
