@@ -5,7 +5,6 @@ body {
     background-position: center;
     background-attachment: fixed;
     font-family: 'Roboto', sans-serif;
-
 }
 
 .pags{
@@ -14,14 +13,23 @@ body {
     justify-content: center;
     align-items: center;
     width: 100vw;
-    gap: 10px;
+    gap: 5px;
 }
 
 .num_pag{
-    gap: 10px;
     display: flex;
     flex-direction: row;
 }
+.num_pag button {
+
+    background-color: #eaeaea;
+    color: #333;
+  }
+  
+  .num_pag button.current-page {
+    background-color: #333;
+    color: #fff;
+  }
 .info{
     display: flex;
     flex-direction: column;

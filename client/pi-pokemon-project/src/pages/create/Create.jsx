@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { postPokemon, getTypes } from "../../redux/actions/index.js";
-import "./Create.style.css";
+import imagen from "../../imagenes/pokeLogo.png";
+import style from "./Create.module.css";
 
 const Create = () => {
     const navigate = useNavigate();
@@ -57,14 +58,13 @@ const Create = () => {
             setErrors({ name: "*this field can only contain letters" })
             return;
         }
-        
-        if (!/\.(jpg|png|gif)$/i.test(input.imagen)) {
-            setErrors({ imagen: "The url you are trying to place is not valid" })
+         if (input.name.length > 15) {
+            setErrors({ name: "*pokemon name cannot be longer than 15 characters" })
             return;
         }
 
-        if (input.name.length > 15) {
-            setErrors({ name: "*pokemon name cannot be longer than 15 characters" })
+        if (!/\.(jpg|png|gif)$/i.test(input.imagen)) {
+            setErrors({ imagen: "The url you are trying to place is not valid" })
             return;
         }
 
@@ -166,138 +166,139 @@ const Create = () => {
             height: "",
             weight: "",
             type: [],
-        })};
+        })
+    };
 
-        return (
-            <div className="create">
-                <a className="" onClick={() => navigate("/home")}>
-                    <img src={"img"} title="Home" />
-                </a>
-                <div className="create__container">
-                    <h1>Create your Pokemon</h1>
-                    <form onSubmit={handleSubmit}>
-                        <div className="create__container--inputs">
-                            <div className="create__container--inputs--name">
-                                <label>Name</label>
-                                <input
-                                    onChange={handleInputChange}
-                                    type="text"
-                                    name="name"
-                                    value={input.name}
-                                />
-                                <span>{errors.name}</span>
-                            </div>
-                            <div className="create__container--inputs--image">
-                                <label htmlFor="imagen">Imagen</label>
-                                <input
-                                    onChange={handleInputChange}
-                                    type="text"
-                                    name="imagen"
-                                    value={input.imagen}
-                                />
-                                <span>{errors.imagen}</span>
-                            </div>
-                            <div className="create__container--inputs--hp">
-                                <label htmlFor="hp">HP</label>
-                                <input
-                                    onChange={handleInputChange}
-                                    type="range"
-                                    min={10}
-                                    max={200}
-                                    name="hp"
-                                    value={input.hp}
-                                />
-                                <p>{input.hp}</p>
-                                <span>{errors.hp}</span>
-                            </div>
-                            <div className="create__container--inputs--attack">
-                                <label htmlFor="attack">Attack:</label>
-                                <input
-                                    onChange={handleInputChange}
-                                    type="range"
-                                    min={10}
-                                    max={200}
-                                    name="attack"
-                                    value={input.attack}
-                                />
-                                <p>{input.attack}</p>
-                                <span>{errors.attack}</span>
-                            </div>
+    return (
+        <div className={style.create}>
+            <a className="" onClick={() => navigate("/home")}>
+                <img src={imagen} title="Home" />
+            </a><h1>Create your Pokemon</h1>
+            <div className={style.create__container}>
 
-                            <div className="create__container--inputs--defense">
-                                <label htmlFor="defense">Defense</label>
-                                <input
-                                    onChange={handleInputChange}
-                                    type="range"
-                                    min={10}
-                                    max={200}
-                                    name="defense"
-                                    value={input.defense}
-                                />
-                                <p>{input.defense}</p>
-                                <span>{errors.defense}</span>
+                <form onSubmit={handleSubmit}>
+                    <div className={style.name}>
+                        <label>Name: </label>
+                        <input
+                            onChange={handleInputChange}
+                            type="text"
+                            name="name"
+                            value={input.name}
+                        />
+                        <span>{errors.name}</span>
+                    </div>
+                    <div className={style.imagen}>
+                        <label htmlFor="imagen">Imagen: </label>
+                        <input
+                            onChange={handleInputChange}
+                            type="text"
+                            name="imagen"
+                            value={input.imagen}
+                        />
+                        <span>{errors.imagen}</span>
+                    </div>
+                    <div className={style.hp}>
+                        <label htmlFor="hp">HP</label>
+                        <input
+                            onChange={handleInputChange}
+                            type="range"
+                            min={10}
+                            max={200}
+                            name="hp"
+                            value={input.hp}
+                        />
+                        <p>{input.hp}</p>
+                        <span>{errors.hp}</span>
+                    </div>
+                    <div className={style.attack}>
+                        <label htmlFor="attack">Attack:</label>
+                        <input
+                            onChange={handleInputChange}
+                            type="range"
+                            min={10}
+                            max={200}
+                            name="attack"
+                            value={input.attack}
+                        />
+                        <p>{input.attack}</p>
+                        <span>{errors.attack}</span>
+                    </div>
 
-                            </div>
-                            <div className="create__container--inputs--speed">
-                                <label htmlFor="speed">Speed</label>
-                                <input
-                                    onChange={handleInputChange}
-                                    type="range"
-                                    min={10}
-                                    max={200}
-                                    name="speed"
-                                    value={input.speed}
-                                />
-                                <p>{input.speed}</p>
-                                <span>{errors.speed}</span>
-                            </div>
-                            <div className="create__container--inputs--height">
-                                <label htmlFor="height">Height</label>
-                                <input
-                                    onChange={handleInputChange}
-                                    type="range"
-                                    min={10}
-                                    max={200}
-                                    name="height"
-                                    value={input.height}
-                                />
-                                <p>{input.height}</p>
-                                <span>{errors.height}</span>
-                            </div>
-                            <div className="create__container--inputs--weight">
-                                <label htmlFor="weight">Weight</label>
-                                <input
-                                    onChange={handleInputChange}
-                                    type="range"
-                                    min={10}
-                                    max={200}
-                                    name="weight"
-                                    value={input.weight}
-                                />
-                                <p>{input.weight}</p>
-                                <span>{errors.weight}</span>
-                            </div>
-                            <div className="create__container--inputs--types">
-                                <label >Type</label>
-                                <select name="type" onChange={handleInputChange}>
-                                    {allTypes?.map((t) => (<option value={t.name} key={t.id} id={t.id}> {t.name}</option>))}
-                                </select>
-                                <span>{errors.type}</span>
-                            </div>
-                            <div>
-                                {input.type.map((t) => <div id={t} key={t}>
-                                    <label >{t}</label> <button name="type" key={t} id={t} onClick={handleDelete}>X</button>
-                                </div>)}
-                            </div>
-                        </div>
+                    <div className={style.defense}>
+                        <label htmlFor="defense">Defense</label>
+                        <input
+                            onChange={handleInputChange}
+                            type="range"
+                            min={10}
+                            max={200}
+                            name="defense"
+                            value={input.defense}
+                        />
+                        <p>{input.defense}</p>
+                        <span>{errors.defense}</span>
 
-                        <button disabled={disableButton()} type="submit">
-                            Create
-                        </button>
-                    </form>
-                </div>
+                    </div>
+                    <div className={style.speed}>
+                        <label htmlFor="speed">Speed</label>
+                        <input
+                            onChange={handleInputChange}
+                            type="range"
+                            min={10}
+                            max={200}
+                            name="speed"
+                            value={input.speed}
+                        />
+                        <p>{input.speed}</p>
+                        <span>{errors.speed}</span>
+                    </div>
+                    <div className={style.height}>
+                        <label htmlFor="height">Height</label>
+                        <input
+                            onChange={handleInputChange}
+                            type="range"
+                            min={10}
+                            max={200}
+                            name="height"
+                            value={input.height}
+                        />
+                        <p>{input.height}</p>
+                        <span>{errors.height}</span>
+                    </div>
+                    <div className={style.weight}>
+                        <label htmlFor="weight">Weight</label>
+                        <input
+                            onChange={handleInputChange}
+                            type="range"
+                            min={10}
+                            max={200}
+                            name="weight"
+                            value={input.weight}
+                        />
+                        <p>{input.weight}</p>
+                        <span>{errors.weight}</span>
+                    </div>
+                    <div className={style.types}>
+                        <label >Type</label>
+                        <select name="type" onChange={handleInputChange}>
+                            {allTypes?.map((t) => (<option value={t.name} key={t.id} id={t.id}> {t.name}</option>))}
+                        </select>
+                        <span>{errors.type}</span>
+                    </div>
+                    <div className={style.typeselect}>
+                        {input.type.map((t) => <div id={t} key={t}>
+                            <label >{t}</label> <button name="type" key={t} id={t} onClick={handleDelete}>X</button>
+                        </div>)}
+                    </div>
+
+                    <button disabled={disableButton()} type="submit">
+                        Create
+                    </button>
+                </form>
             </div>
-        );
-    }
 
-    export default Create;
+        </div>
+
+    );
+}
+
+export default Create;

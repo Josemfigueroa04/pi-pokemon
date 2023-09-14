@@ -1,0 +1,140 @@
+.create {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  margin: 0 auto;
+  width: 100vw;
+
+}
+
+.create__container {
+  width: 500px;
+  padding: 20px;
+  background-color: rgb(135, 206, 235, 0.9);
+  border-radius: 5px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.create h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.create form {
+  display: flex;
+  flex-direction: column;
+}
+
+.create form label {
+  margin-bottom: 10px;
+}
+
+.create form input,
+.create form select {
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.create form input[type="range"] {
+  width: 100%;
+}
+
+.create form p {
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.create form span {
+  color: red;
+  margin-bottom: 10px;
+}
+
+.create form button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.create form button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+
+
+.hp {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.attack{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.defense{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.speed{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.height{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.weight{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.types{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.typeselect{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+button{
+  margin: 10px;
+
+}

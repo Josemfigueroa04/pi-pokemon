@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 import { getPokemons, getPokemonName } from "../../redux/actions/index.js";
 import './Home.style.css'
 
-
 const Home = () => {
     const allPokemons = useSelector((state) => state.allPokemons);
     const dispatch = useDispatch();
@@ -25,54 +24,46 @@ const Home = () => {
     }
 
 
-    useEffect(() => {
-        setPaginado(1);
-    }, [allPokemons]);
-
     function handleInputChange(e) {
         e.preventDefault();
         setSearch(e.target.value);
+        
     }
 
     function handleSubmit(e) {
         e.preventDefault();
         dispatch(getPokemonName(search));
-    }
+        setPaginado(1);
 
+    }
 
     useEffect(() => {
         dispatch(getPokemons());
-        return () => {
-            dispatch(getPokemons());
-        }
     }, []);
-
 
     return (
         <div>
-            {allPokemons.length > 0 ? (
+            {allPokemons.length > 0  ? (
                 <>
                     <Nav handleInputChange={handleInputChange} handleSubmit={handleSubmit} />
-
-                    <Filter />
-
+                    <Filter setPaginado = {setPaginado} />
                     <div className="pags">
-                        <button onClick={() => setPaginado(1)}>Start</button>
+                        <button disabled={paginado <= 1} onClick={() => setPaginado(1)}>Start</button>
                         <button disabled={paginado <= 1} onClick={() => setPaginado(paginado - 1)}>PREV</button>
                         <div className="num_pag">
                             {numeroPaginas?.map((numero) => (
-                                <button key={numero} onClick={() => setPaginado(numero)}>{numero}</button>
+                                <button className={numero === paginado ? "current-page" : ""} key={numero} onClick={() => setPaginado(numero)}>{numero}</button>
                             ))}
                         </div>
-
                         <button disabled={paginado === indexUltimoPokemon} onClick={() => setPaginado(paginado + 1)}>NEXT</button>
-                        <button onClick={() => setPaginado(indexUltimoPokemon)}>End</button>
+                        <button disabled={paginado === indexUltimoPokemon} onClick={() => setPaginado(indexUltimoPokemon)}>End</button>
                     </div>
+
                     <Cards pokemonsPaginados={pokemonsPaginados} />
                 </>
-                ) : (
+            ) : (
                 <Loading />
-                )}
+            )}
         </div>
     )
 }

@@ -9,13 +9,12 @@ const Nav = ({ handleInputChange, handleSubmit }) => {
                 <img src={imagen} alt="logo" />
             </div>
             <div className={style.nav_links}>
-                <Link to="/"> <button>Home</button> </Link>
-                <Link to="/home"> <button>Pokemons</button></Link>
+                
                 <Link to="/create"> <button>Create Pokemons</button> </Link>
             </div>
 
             <form className={style.search_bar}>
-                <label htmlFor=""></label>
+                <label ></label>
                 <input onChange={handleInputChange} type="search" placeholder="Pokemon Name" />
                 <button type="submit" onClick={handleSubmit}>Search</button>
             </form>

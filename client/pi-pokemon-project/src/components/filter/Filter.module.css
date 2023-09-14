@@ -4,6 +4,6 @@
     flex-direction: row;
     width: 100vw;
     height: 50px;
-
+    justify-content: space-around;
 }
 

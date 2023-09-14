@@ -5,7 +5,7 @@ import style from './Filter.module.css';
 
 
 
-const Filter = () => {
+const Filter = ({setPaginado}) => {
     const dispatch = useDispatch();
     const allPokemons = useSelector((state) => state.allPokemons);
     const allTypes = useSelector((state) => state.allTypes);
@@ -25,15 +25,18 @@ const Filter = () => {
 
     const handleFilter = (e) => {
         dispatch(filterPokemons(e.target.value))
+        setPaginado(1)
     }
 
     const handleFilterType = (e) => {
         dispatch(filterType(e.target.value))
+        setPaginado(1)
     }
 
     return (
         <div className={style.container}>
-            <div>
+
+            <div className={style.order}>
                 <select onChange={handleOrderName}>
                     <option value="default">Name</option>
                     <option value="Asc">A-Z</option>
@@ -45,24 +48,27 @@ const Filter = () => {
                     <option value="Asc">Attack Asc</option>
                     <option value="Dec">Attack Desc</option>
                 </select>
-            </div>
 
-            <div>
                 <select onChange={handleFilter}>
                     <option value="All">Filter</option>
                     <option value="creado">Created</option>
                     <option value="api">Api</option>
                 </select>
 
-                <select onClick={handleFilterType} >
+                <select onChange={handleFilterType} >
                     <option value="allTypes">All Types</option>
                     {allTypes?.map((t) => (
-                        <option key={t.id} value={t.name}>
+                        <option  key={t.id} value={t.name}>
                             {t.name}
                         </option>
                     ))}
                 </select>
             </div>
+
+            <div className='reset'>
+                <button value="default" onClick={handleOrderName}> Reset</button>
+            </div>
+            
         </div>
     )
 

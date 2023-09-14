@@ -8,7 +8,7 @@ const getPokemonApiControllers = async () => {
 
   let i = 0;
 
-  while (i < 7) {
+  while (i < 3) {
     const { data } = await axios.get(url);
     const pokemonApi = data.results.map(async (pokemon) => {
       const { data } = await axios.get(pokemon.url);
