@@ -39,6 +39,9 @@ const Home = () => {
 
     useEffect(() => {
         dispatch(getPokemons());
+        return async () => {
+            await dispatch(getPokemons());
+        }
     }, []);
 
     return (

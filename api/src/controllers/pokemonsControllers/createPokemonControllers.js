@@ -24,8 +24,7 @@ const createPokemonControllers = async (name, imagen, hp, attack, defense, speed
     };
     if (!imagen){
         imagen = 'https://pokemonletsgo.pokemon.com/assets/img/common/char-pikachu.png'
-    }
-  
+    }  
 
     //busco el pokemon en la base de datos
     const pokemonExists = await Pokemon.findOne({ where: { name } });
