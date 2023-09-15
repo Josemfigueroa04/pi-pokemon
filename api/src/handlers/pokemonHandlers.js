@@ -12,14 +12,13 @@ const getPokemonHandler = async (req, res) => {
             const pokemonByName = await getPokemonByNameControllers(minName);
             res.status(200).json(pokemonByName)
         } catch (error) {
-            res.status(400).json( error.message );
+            res.status(400).json(error.message);
         };
     } else {
         try {
             const apiPokemons = await getPokemonApiControllers();
             const dbPokemons = await getPokemonDbControllers();
             const allPokemons = [...dbPokemons, ...apiPokemons]
-
             res.status(200).json(allPokemons);
         } catch (error) {
             res.status(400).json({ error: error.message });
@@ -49,8 +48,6 @@ const createPokemonHandler = async (req, res) => {
         res.status(400).json(error.message);
     }
 };
-
-
 
 module.exports = {
     getPokemonHandler,
